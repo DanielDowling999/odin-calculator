@@ -10,7 +10,9 @@
 <body>
     <div id = "calcFrame">
         <div id ="calcResult">
-            9999999999
+            <!-- I would like to include the four symbols above the result, which will 'light' up when pressed, rather than replace the result-->
+            <div id="operationSelected">+ - x ÷</div>
+            <div id = "result">9999999999</div>
         </div>
         <div id="calcNumbers">
             <button class="calc-btn num-btn">9</button>
@@ -25,12 +27,15 @@
             <button class="calc-btn num-btn">0</button>
         </div>
         <div id="calcCommands">
+            <button class = "calc-btn cmd-btn">+</button>
+            <button class = "calc-btn cmd-btn">-</button>
+            <button class = "calc-btn cmd-btn">x</button>
+            <button class = "calc-btn cmd-btn">÷</button>
             <button class = "calc-btn cmd-btn">=</button>
             <button class = "calc-btn cmd-btn">.</button>
             <button class = "calc-btn cmd-btn">clr</button>
             <button class = "calc-btn cmd-btn">del</button>
         </div>
-
     </div>
     
 
