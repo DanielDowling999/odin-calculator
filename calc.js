@@ -39,6 +39,10 @@ function operate(x, y, sign){
             return multiply(x,y);
             break;
         case "÷":
+            if(y == 0){
+                alert("For that one, I'm deleting your entire harddrive.")
+                return 0;
+            }
             return divide(x,y);
             break;
         default:
@@ -71,6 +75,8 @@ function handlePress(buttonPressed){
         outputResult.innerText = num1;
         operator = "";
         completeResult = true;
+        num2Input = false;
+        num2 = 0;
     }
     else if (/^[+\-x÷]$/.test(buttonPressed)){
         if (!num2Input){
@@ -85,8 +91,16 @@ function handlePress(buttonPressed){
         }
 
     }
+    else if (buttonPressed == "clr"){
+        num1=0;
+        num2=0;
+        operator = "";
+        num2Input = false;
+        completeResult = false;
+        outputResult.innerText = num1;
+    }
     else{
-        operator=buttonPressed;        
+        console.log("Doing nothing")       
     }
     
 }
