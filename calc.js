@@ -112,6 +112,20 @@ function handlePress(buttonPressed){
         outputResult.innerText = "0";
     }
 
+    else if (buttonPressed == "del"){
+        if(num2Input && num2Str.length > 0 ){
+            num2Str = num2Str.slice(0, -1);
+            outputResult.innerText = num2Str || "0";
+            if(num2str === ""){
+                num2Input = false;
+            }
+        }
+        else if (num1Str.length > 0){
+            num1Str = num1Str.slice(0, -1);
+            outputResult.innerText = num1Str || "0";
+        }
+    }
+
     else{
         console.log("Doing nothing");
     }
