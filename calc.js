@@ -23,8 +23,8 @@ function divide(x,y){
     return x/y;
 }
 
-let num1 = 0;
-let num2 = 0;
+let num1Str = "";
+let num2Str = "";
 let operator = "";
 let decimalPressed = false;
 let wholeNumMult = 10;
@@ -53,79 +53,67 @@ function operate(x, y, sign){
             console.log("Num1: " + num1 + " Num2: " + num2 + " Operator: " + operator)
     }
 }
-
-function resetDecimalMult(){
-    decimalPressed = false;
-    wholeNumMult = 10;
-    decimalNumMult = 1;
-
+function cleanFloat(value) {
+    return Number(value.toFixed(10)).toString();
 }
 
-
 function handlePress(buttonPressed){
-    if (buttonPressed !== '' && !isNaN(Number(buttonPressed))){
-        if (operator === ""){
-            if (completeResult){
-                completeResult = false;
-                num1=0;
-                num2=0;
-                num2Input = false;
-                resetDecimalMult()
-
+    if(!isNaN(buttonPressed) || buttonPressed == '.'){
+        if (completeResult){
+            num1Str = "";
+            num2Str = "";
+            operator = "";
+            completeResult = false;
+        }
+        if (operator == ""){
+            if (buttonPressed =='.' && num1Str.includes(".")){
+                return;
             }
-            num1 = num1*wholeNumMult + Number(buttonPressed)*decimalNumMult;
-            if(decimalPressed){
-                decimalNumMult = decimalNumMult/10;
-            }
-            outputResult.innerText = num1;
+            num1Str += buttonPressed;
+            outputResult.innerText = num1Str || "0"; //To ensure something is always being displayed
         }
         else{
-            num2 = num2*wholeNumMult + Number(buttonPressed)*decimalNumMult;
-            if(decimalPressed){
-                decimalNumMult = decimalNumMult/10;
+            if (buttonPressed == '.' && num2Str.includes(".")){
+                return;
             }
-            outputResult.innerText = num2;
+            num2Str += buttonPressed;
+            outputResult.innerText = num2Str || "0";
             num2Input = true;
         }
 
     }
-    if(buttonPressed == "." && !(decimalPressed)){
-        decimalPressed = true;
-        wholeNumMult = 1;
-        decimalNumMult = 1/10;
-    }
-    else if (buttonPressed == "=" && num2Input){
-        num1 = operate(num1, num2, operator);
-        outputResult.innerText = num1;
-        operator = "";
-        completeResult = true;
-        num2Input = false;
-        num2 = 0;
-    }
     else if (/^[+\-x÷]$/.test(buttonPressed)){
-        if (!num2Input){
+        if(!num2Input){
             operator = buttonPressed;
         }
         else{
-            num1 = operate(num1, num2, operator);
-            outputResult.innerText=num1;
-            num2 = 0;
+            num1Str = cleanFloat(operate(Number(num1Str), Number(num2Str), operator));
+            outputResult.innerText = num1Str;
+            num2Str = "";
             num2Input = false;
             operator = buttonPressed;
         }
-        resetDecimalMult();
     }
-    else if (buttonPressed == "clr"){
-        num1=0;
-        num2=0;
+    else if (buttonPressed == "=" && num2Input){
+        num1Str = cleanFloat(operate(Number(num1Str), Number(num2Str), operator));
+        outputResult.innerText = num1Str;
+        operator = "";
+        completeResult = true;
+        num2Input = false;
+        num2Str = "";
+
+    }
+    else if (buttonPressed =="clr"){
+        num1Str = "";
+        num2Str = "";
         operator = "";
         num2Input = false;
         completeResult = false;
-        outputResult.innerText = num1;
-        resetDecimalMult()
+        outputResult.innerText = "0";
     }
+
     else{
-        console.log("Doing nothing")       
+        console.log("Doing nothing");
     }
-    
+
 }
