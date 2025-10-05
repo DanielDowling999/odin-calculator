@@ -9,6 +9,36 @@ btns.forEach(button=> {
     })
 })
 
+document.addEventListener('keydown', (event) =>{
+    mapInput(event);
+})
+
+function mapInput(eventKey){
+    const keyMap = {
+        "+":"+",
+        "-":"-",
+        "*":"x",
+        "/":"÷",
+        "=":"=",
+        "Enter":"=",
+        "Backspace":"del",
+        "Escape":"clr",
+        ".":"."
+    };
+    let key = eventKey.key;
+    let buttonPressed;
+
+    if(!isNaN(key)){
+        buttonPressed = key;
+    }
+    else{
+        buttonPressed = keyMap[key];
+    }
+    if (buttonPressed){
+        handlePress(buttonPressed);
+    }
+}
+
 
 function add(x,y){
     return x+y;
