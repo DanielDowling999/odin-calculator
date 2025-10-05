@@ -26,6 +26,9 @@ function divide(x,y){
 let num1 = 0;
 let num2 = 0;
 let operator = "";
+let decimalPressed = false;
+let wholeNumMult = 10;
+let decimalNumMult = 1;
 
 function operate(x, y, sign){
     switch(sign){
@@ -51,6 +54,14 @@ function operate(x, y, sign){
     }
 }
 
+function resetDecimalMult(){
+    decimalPressed = false;
+    wholeNumMult = 10;
+    decimalNumMult = 1;
+
+}
+
+
 function handlePress(buttonPressed){
     if (buttonPressed !== '' && !isNaN(Number(buttonPressed))){
         if (operator === ""){
@@ -59,16 +70,29 @@ function handlePress(buttonPressed){
                 num1=0;
                 num2=0;
                 num2Input = false;
+                resetDecimalMult()
+
             }
-            num1 = num1*10 + Number(buttonPressed);
+            num1 = num1*wholeNumMult + Number(buttonPressed)*decimalNumMult;
+            if(decimalPressed){
+                decimalNumMult = decimalNumMult/10;
+            }
             outputResult.innerText = num1;
         }
         else{
-            num2 = num2*10 + Number(buttonPressed);
+            num2 = num2*wholeNumMult + Number(buttonPressed)*decimalNumMult;
+            if(decimalPressed){
+                decimalNumMult = decimalNumMult/10;
+            }
             outputResult.innerText = num2;
             num2Input = true;
         }
 
+    }
+    if(buttonPressed == "." && !(decimalPressed)){
+        decimalPressed = true;
+        wholeNumMult = 1;
+        decimalNumMult = 1/10;
     }
     else if (buttonPressed == "=" && num2Input){
         num1 = operate(num1, num2, operator);
@@ -89,7 +113,7 @@ function handlePress(buttonPressed){
             num2Input = false;
             operator = buttonPressed;
         }
-
+        resetDecimalMult();
     }
     else if (buttonPressed == "clr"){
         num1=0;
@@ -98,6 +122,7 @@ function handlePress(buttonPressed){
         num2Input = false;
         completeResult = false;
         outputResult.innerText = num1;
+        resetDecimalMult()
     }
     else{
         console.log("Doing nothing")       
