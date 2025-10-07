@@ -13,9 +13,4 @@ button{
 -Change font to something like roboto?
 -Have the +*-/ symbols only show up when pressed, and are otherwise hidden. Could change it so the content changes on click
 rather than hiding.
--Rearrange into a calculator shape, specifically:
-    9 8 7 +
-    6 5 4 -
-    3 2 1 *
-    [0] . /
-    clr del = */
+*/
