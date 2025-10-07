@@ -1,0 +1,15 @@
+body {
+    background-color:black;
+    color:white;
+
+}
+button{
+    background-color:black;
+    color:white;
+}
+
+/*todo: Colour changing borders around the buttons
+Highlight the buttons when pressed, either by pressing in or changing colour
+-Change font to something like roboto?
+-Have the +*-/ symbols only show up when pressed, and are otherwise hidden. Could change it so the content changes on click
+rather than hiding.*/
