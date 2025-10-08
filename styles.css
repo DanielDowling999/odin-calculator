@@ -22,6 +22,7 @@ button{
     padding:20px;
 }
 
+
 #calcFrame{
     width: 400px;
     display:flex;
@@ -73,11 +74,13 @@ button{
 
 
 
-/*todo: Colour changing borders around the buttons
+/*todo: 
+-Colour changing borders around the buttons
 -Highlight the buttons when pressed, either by pressing in or changing colour
--Change font to something like roboto?
 -Have the +*-/ symbols only show up when pressed, and are otherwise hidden. Could change it so the content changes on click
 rather than hiding.
+
+Going to change all of the above to be the same thing: I want the border, button border (or button or button text) on hover, and +/-* symbols to have the same rainbow gradient animation*/
 */
 
 
