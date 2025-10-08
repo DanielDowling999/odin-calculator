@@ -13,6 +13,22 @@ document.addEventListener('keydown', (event) =>{
     mapInput(event);
 })
 
+function formatDisplay(numStr) {
+    // Remove leading zeros but keep "0" if that's all there is
+    let cleaned = numStr.replace(/^0+/, '') || '0';
+    
+    // Count significant digits (excluding decimal point)
+    let digits = cleaned.replace('.', '').length;
+    
+    if (digits > 16) {
+        // Convert to number and use scientific notation
+        let num = Number(cleaned);
+        return num.toExponential(2); // Shows as "4.21e+33"
+    }
+    
+    return cleaned;
+}
+
 function mapInput(eventKey){
     const keyMap = {
         "+":"+",
@@ -100,14 +116,14 @@ function handlePress(buttonPressed){
                 return;
             }
             num1Str += buttonPressed;
-            outputResult.innerText = num1Str || "0"; //To ensure something is always being displayed
+            outputResult.innerText = formatDisplay(num1Str) || "0"; //To ensure something is always being displayed
         }
         else{
             if (buttonPressed == '.' && num2Str.includes(".")){
                 return;
             }
             num2Str += buttonPressed;
-            outputResult.innerText = num2Str || "0";
+            outputResult.innerText = formatDisplay(num2Str) || "0";
             num2Input = true;
         }
 
@@ -118,7 +134,7 @@ function handlePress(buttonPressed){
         }
         else{
             num1Str = cleanFloat(operate(Number(num1Str), Number(num2Str), operator));
-            outputResult.innerText = num1Str;
+            outputResult.innerText = formatDisplay(num1Str);
             num2Str = "";
             num2Input = false;
             operator = buttonPressed;
@@ -126,7 +142,7 @@ function handlePress(buttonPressed){
     }
     else if (buttonPressed == "=" && num2Input){
         num1Str = cleanFloat(operate(Number(num1Str), Number(num2Str), operator));
-        outputResult.innerText = num1Str;
+        outputResult.innerText = formatDisplay(num1Str);
         operator = "";
         completeResult = true;
         num2Input = false;
