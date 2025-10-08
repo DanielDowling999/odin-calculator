@@ -4,6 +4,33 @@
     font-weight: normal;
     font-style: normal;
 }
+
+/*
+@keyframes rainbow {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg);}
+}*/
+
+@property --gradient-angle{
+    syntax: "<angle>";
+    initial-value:0deg;
+    inherits:false;
+}
+
+@keyframes rotation{
+    0% { --gradient-angle: 0deg;}
+    100% { --gradient-angle:360deg;}
+}
+
+:root{
+    --clr-1: #020526;
+    --clr-2: #0D0632;
+    --clr-3: #321647;
+    --clr-4: #7D0F40;
+    --clr-5: #B11C32;
+    --clr-6: #FF9A56;
+}
+
 body {
     background-color:black;
     color:white;
@@ -21,7 +48,15 @@ button{
     border:1px solid #333;
     padding:20px;
 }
+button:hover{
+    background-color:#1a0f1f;
+    cursor:pointer;
+}
 
+button:active{
+    background-color: #2a1040;
+    transform: scale(0.98); 
+}
 
 #calcFrame{
     width: 400px;
@@ -30,8 +65,37 @@ button{
     border:2px solid #333;
     padding:20px;
     border-radius: 10px;
+    position:relative;
+    background:black;
+
+}
+#calcFrame::before,
+#calcFrame::after{
+    content:"";
+    position:absolute;
+    inset:-.5rem;
+    border-radius:inherit;
+    z-index:-1;
+    background: conic-gradient(
+        from var(--gradient-angle),
+        var(--clr-1),
+        var(--clr-2),
+        var(--clr-3),
+        var(--clr-4),
+        var(--clr-5),
+        var(--clr-6),
+        var(--clr-5),
+        var(--clr-4),
+        var(--clr-3),
+        var(--clr-2),
+        var(--clr-1)
+    );
+    animation: rotation 10s linear infinite;
 }
 
+#calcFrame::after{
+    filter:blur(3.5rem);
+}
 #calcResult{
     text-align: right;
     background-color: #111;
@@ -42,10 +106,25 @@ button{
 
 }
 
+#operationSelected{
+    display:flex;
+    flex-direction:row;
+    gap:10px;
+    justify-content:right;
+}
+
+.operand{
+    color:#333;
+    transition:color 0.2s;
+}
+
+.operand.active{
+    color:#ff9a56;
+}
+
 #result{
     font-family:'Time', sans-serif;
     font-size: 30px;
-
 }
 
 #calculator{
@@ -68,34 +147,5 @@ button{
 }
 
 .big-btn{
-    flex:5;
+    flex:3;
 }
-
-
-
-
-/*todo: 
--Colour changing borders around the buttons
--Highlight the buttons when pressed, either by pressing in or changing colour
--Have the +*-/ symbols only show up when pressed, and are otherwise hidden. Could change it so the content changes on click
-rather than hiding.
-
-Going to change all of the above to be the same thing: I want the border, button border (or button or button text) on hover, and +/-* symbols to have the same rainbow gradient animation*/
-*/
-
-
-
-
-
-
-
-
-/*
-
-
-        #operationSelected.active-add::before { content: '+'; color: #0f0; }
-        #operationSelected.active-subtract::before { content: '-'; color: #0f0; }
-        #operationSelected.active-multiply::before { content: '×'; color: #0f0; }
-        #operationSelected.active-divide::before { content: '÷'; color: #0f0; }
-
-            */

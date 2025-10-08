@@ -55,6 +55,7 @@ function mapInput(eventKey){
     }
 }
 
+//Add negative number functionality
 
 function add(x,y){
     return x+y;
@@ -103,6 +104,18 @@ function cleanFloat(value) {
     return Number(value.toFixed(10)).toString();
 }
 
+function highlightOperator(op) {
+    // Remove active class from all operands
+    document.querySelectorAll('.operand').forEach(el => el.classList.remove('active'));
+    
+    // Add active class to the matching operand
+    const opMap = {'+': 0, '-': 1, 'x': 2, '÷': 3};
+    if (opMap[op] !== undefined) {
+        document.querySelectorAll('.operand')[opMap[op]].classList.add('active');
+    }
+}
+
+
 function handlePress(buttonPressed){
     if(!isNaN(buttonPressed) || buttonPressed == '.'){
         if (completeResult){
@@ -126,11 +139,25 @@ function handlePress(buttonPressed){
             outputResult.innerText = formatDisplay(num2Str) || "0";
             num2Input = true;
         }
+    }
+
+    else if (buttonPressed == '(-)'){
+        if(num2Input){
+            num2Str = String(Number(num2Str)*-1);
+            outputResult.innerText = formatDisplay(num2Str);
+
+        }
+        else{
+            num1Str = String(Number(num1Str)*-1);
+            outputResult.innerText = formatDisplay(num1Str);
+        }
 
     }
+
     else if (/^[+\-x÷]$/.test(buttonPressed)){
         if(!num2Input){
             operator = buttonPressed;
+            highlightOperator(buttonPressed);
         }
         else{
             num1Str = cleanFloat(operate(Number(num1Str), Number(num2Str), operator));
@@ -138,6 +165,7 @@ function handlePress(buttonPressed){
             num2Str = "";
             num2Input = false;
             operator = buttonPressed;
+            highlightOperator(buttonPressed);
         }
     }
     else if (buttonPressed == "=" && num2Input){
@@ -147,6 +175,8 @@ function handlePress(buttonPressed){
         completeResult = true;
         num2Input = false;
         num2Str = "";
+        document.querySelectorAll('.operand').forEach(el => el.classList.remove('active'));
+
 
     }
     else if (buttonPressed =="clr"){
